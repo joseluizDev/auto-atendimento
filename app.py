@@ -1,30 +1,39 @@
-from datetime import datetime
+import random
+import time
 
-from apscheduler.schedulers.background import BackgroundScheduler
-from fastapi import FastAPI
+import requests
 
-app = FastAPI()
+from mensagens import mensagens_de_amor
 
-mensagens = [
-    "Bom dia",
-]
+BASE_URL = 'https://server-evolutionapi.uwqcav.easypanel.host'
+API_KEY = 'Jr59IRl66nL0sJtq2EmBfQNMVQqwvKyi'
+CHAT = 'JoseLuiz'
+telefone = '+559492883002'
 
+headers = {
+    'Apikey': API_KEY,
+}
 
-def enviar_mensagem_de_amor():
-    mensagem = mensagens[datetime.now().day % len(mensagens)]
-    print(mensagem)
+while True:
+    mensagem = random.choice(mensagens_de_amor)
 
+    body = {
+        "number": f"{telefone}@s.whatsapp.net",
+        "textMessage": {
+            "text": f"{mensagem.replace('\n', '\\n')}"
+        },
+        "options": {
+            "delay": 1200,
+            "presence": "composing"
+        }
+    }
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(enviar_mensagem_de_amor, 'cron', hour=14, minute=8)
-scheduler.start()
+    response = requests.post(
+        f'{BASE_URL}/message/sendText/{CHAT}',
+        json=body,
+        headers=headers,
+    )
 
+    print(response.json())
 
-@app.get("/")
-def read_root():
-    return {"message": "API de Mensagens de Amor"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    time.sleep(600)
