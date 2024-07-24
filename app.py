@@ -8,7 +8,7 @@ from mensagens import mensagens_de_amor
 BASE_URL = 'https://server-evolutionapi.uwqcav.easypanel.host'
 API_KEY = 'Jr59IRl66nL0sJtq2EmBfQNMVQqwvKyi'
 CHAT = 'JoseLuiz'
-telefone = '+559492883002'
+telefone = '559492883002'
 
 headers = {
     'Apikey': API_KEY,
@@ -16,7 +16,7 @@ headers = {
 
 while True:
     mensagem = random.choice(mensagens_de_amor)
-
+    print(mensagem)
     body = {
         "number": f"{telefone}@s.whatsapp.net",
         "textMessage": {
