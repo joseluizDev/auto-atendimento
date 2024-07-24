@@ -9,6 +9,7 @@ BASE_URL = 'https://server-evolutionapi.uwqcav.easypanel.host'
 API_KEY = 'Jr59IRl66nL0sJtq2EmBfQNMVQqwvKyi'
 CHAT = 'JoseLuiz'
 telefone = '559492883002'
+telefone2 = '553299644257'
 
 headers = {
     'Apikey': API_KEY,
@@ -27,10 +28,26 @@ while True:
             "presence": "composing"
         }
     }
+    body2 = {
+        "number": f"{telefone2}@s.whatsapp.net",
+        "textMessage": {
+            "text": f"{mensagem.replace('\n', '\\n')}"
+        },
+        "options": {
+            "delay": 1200,
+            "presence": "composing"
+        }
+    }
 
     response = requests.post(
         f'{BASE_URL}/message/sendText/{CHAT}',
         json=body,
+        headers=headers,
+    )
+
+    response = requests.post(
+        f'{BASE_URL}/message/sendText/{CHAT}',
+        json=body2,
         headers=headers,
     )
 
