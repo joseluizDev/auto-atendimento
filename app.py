@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook')
 def webhook():
     if request.method == 'POST':
         data = request.get_json()
