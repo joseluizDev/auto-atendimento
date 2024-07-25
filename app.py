@@ -1,18 +1,18 @@
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
+from flask import Flask, jsonify, request
 
-app = FastAPI()
-
-
-class WebhookData(BaseModel):
-    key: str
+app = Flask(__name__)
 
 
-@app.post("/webhook")
-async def webhook():
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        data = request.get_json()
+        # Aqui você pode processar os dados recebidos
+        print(data)
+        return jsonify({'status': 'sucesso'}), 200
+    else:
+        return jsonify({'status': 'método não permitido'}), 405
 
-    return {"status": "sucesso", "message": "Webhook recebido!"}
 
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=8000)
+    app.run(port=8000)
