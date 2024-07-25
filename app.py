@@ -9,8 +9,8 @@ class WebhookData(BaseModel):
 
 
 @app.post("/webhook")
-async def webhook(data: WebhookData):
-    print("Dados recebidos:", data)
+async def webhook():
+
     return {"status": "sucesso", "message": "Webhook recebido!"}
 
 if __name__ == '__main__':
